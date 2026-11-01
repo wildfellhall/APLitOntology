@@ -1,0 +1,13 @@
+export * from './curriculum.js';
+import {catalog} from './catalog.js';
+import questions1 from './questions/unit1.js';
+import questions2 from './questions/unit2.js';
+import questions3 from './questions/unit3.js';
+import questions4 from './questions/unit4.js';
+import questions5 from './questions/unit5.js';
+import questions6 from './questions/unit6.js';
+import questions7 from './questions/unit7.js';
+import questions8 from './questions/unit8.js';
+import questions9 from './questions/unit9.js';
+export const questions=[...questions1,...questions2,...questions3,...questions4,...questions5,...questions6,...questions7,...questions8,...questions9];
+export const questionsByConcept=Object.fromEntries(catalog.map(n=>[n.id,questions.filter(q=>q.concept===n.id)]));
