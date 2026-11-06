@@ -2,7 +2,7 @@
 
 Install with `npm ci`. Run `npm run dev` on port 5176, or `npm run build` followed by `npm run preview` on port 4176.
 
-Run `npm test` for content, graph, rubric, source-integrity, and README checks. With the preview running, run `npm run test:browser` for all concept routes, complete readers, assignment views, saved work, writing tools, mobile layouts, and accessibility checks. Browser tests accept only local ports.
+Run `npm test` for content, graph, rubric, source-integrity, and README checks. With the preview running, run `npm run test:browser` for all concept routes, complete readers, assignment views, saved work, writing tools, mobile layouts, and accessibility checks. Browser tests accept only local ports. Run `npm run test:course` for personal course workflows. See [COURSE.md](COURSE.md) for scheduling and mastery behavior.
 
 The library contains 90 concepts, 900 exclusive concept MCQs, 90 concept essays, 90 concept projects, 17 classical-text projects, and 17 complete Gutenberg volumes. Book assignment pages reuse the corresponding canonical MCQs and add 24 text-specific essay prompts. Repeated views do not count as additional questions.
 

@@ -13,7 +13,8 @@
     "export:ontology": "node scripts/export-ontology.mjs",
     "predev": "npm run lexicon:build",
     "prebuild": "npm run lexicon:build && npm run export:ontology",
-    "pretest": "npm run lexicon:build"
+    "pretest": "npm run lexicon:build",
+    "test:course": "node tests/course-browser.mjs"
   },
   "dependencies": {
     "@fontsource/baskervville": "^5.3.0",

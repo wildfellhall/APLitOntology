@@ -23,7 +23,7 @@ export function useQuestions(load,key){
  return {...state,retry:()=>setAttempt(n=>n+1)};
 }
 export function QuestionLoading({state}){return state.error?<p role="alert">The question set could not be loaded. <button onClick={state.retry}>Try loading again</button></p>:<p role="status">Opening question set…</p>;}
-export default function Practice({node,lesson,work,patch}){
- const state=useQuestions(()=>loadConceptQuestions(node),node.id);const [mode,setMode]=useState('mcq');
- return <><div className="practice-mode"><button aria-pressed={mode==='mcq'} onClick={()=>setMode('mcq')}>Multiple choice</button><button aria-pressed={mode==='essay'} onClick={()=>setMode('essay')}>Essay</button></div>{mode==='mcq'?<><p className="quiet">{practiceNotice}</p>{state.loading||state.error?<QuestionLoading state={state}/>:<QuestionSet key={node.id} questions={state.questions} work={work} patch={patch}/>}</>:<Essay frq={lesson.frq} id={node.id} work={work} patch={patch}/>}</>;
+export default function Practice({node,lesson,work,patch,initialMode='mcq'}){
+ const state=useQuestions(()=>loadConceptQuestions(node),node.id);const [mode,setMode]=useState(initialMode);
+ return <><div className="practice-mode"><button aria-pressed={mode==='mcq'} onClick={()=>{setMode('mcq');location.hash=`/concept/${node.id}/practice`;}}>Multiple choice</button><button aria-pressed={mode==='essay'} onClick={()=>{setMode('essay');location.hash=`/concept/${node.id}/practice/essay`;}}>Essay</button></div>{mode==='mcq'?<><p className="quiet">{practiceNotice}</p>{state.loading||state.error?<QuestionLoading state={state}/>:<QuestionSet key={node.id} questions={state.questions} work={work} patch={patch}/>}</>:<Essay frq={lesson.frq} id={node.id} work={work} patch={patch}/>}</>;
 }
