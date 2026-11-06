@@ -1,3 +1,4 @@
+import {PageTitle} from './Ornament.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {catalog,catalogById,edges,units,domains} from '../data/curriculum.js';
 import {courseConfig} from '../course/config.js';
@@ -12,7 +13,7 @@ export default function ConceptMap({work,updateCourse,initial}){
  const ids=new Set(visible.map(n=>n.id)),visibleEdges=edges.filter(e=>ids.has(e.source)&&ids.has(e.target));
  const positions=useMemo(()=>{const byUnit={};for(const n of visible)(byUnit[n.unit]??=[]).push(n);return Object.fromEntries(Object.keys(byUnit).flatMap((u,col)=>byUnit[u].map((n,row)=>[n.id,{x:col*235+125,y:row*78+75}])));},[visible.map(n=>n.id).join(',')]);
  const width=Math.max(700,new Set(visible.map(n=>n.unit)).size*235+20),height=Math.max(350,Math.max(...Object.values(positions).map(p=>p.y),100)+55);
- return <><div className="page-heading"><h1>Concept map</h1><p>Select a concept to inspect its connections and update your mastery assessment.</p></div>
+ return <><div className="page-heading"><PageTitle>Concept map</PageTitle><p>Select a concept to inspect its connections and update your mastery assessment.</p></div>
  <div className="filters"><label>Concept<select value={selected} onChange={e=>setSelected(e.target.value)}>{catalog.map(n=><option key={n.id} value={n.id}>{n.title}</option>)}</select></label><label>Mastery<select value={state} onChange={e=>setState(e.target.value)}><option value="all">All states</option>{Object.entries(masteryStates).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><a className="text-link" href="#/course">My course →</a></div>
  <details className="map-options"><summary>Map options</summary><div className="filters"><label>View<select value={show} onChange={e=>setShow(e.target.value)}><option value="near">Selected concept & connections</option><option value="all">Entire course</option></select></label><label>Area<select value={domain} onChange={e=>setDomain(e.target.value)}><option value="all">All areas</option>{domains.map(d=><option key={d.id} value={d.id}>{d.title}</option>)}</select></label></div></details>
  <MasteryLegend/>{!visible.length?<p role="status">No concepts match these filters.</p>:<><p className="map-key"><span>— Prerequisite</span><span>┄ Connection</span></p><div className="map-scroll" tabIndex={0} aria-label="Scrollable concept graph"><svg width={width} height={height} aria-labelledby="map-title"><title id="map-title">Relationships and mastery for {show==='all'?'the course':node.title}</title><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="currentColor"/></marker></defs>

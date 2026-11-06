@@ -1,99 +1,377 @@
-/* Flat printed pages. Burgundy identifies the brand, actions, and selected states. */
-:root{
- --paper:#f7f4eb;
- --page:#fbf9f2;
- --ink:#302e2b;
- --burgundy:#642d3d;
- --muted:#68645d;
- --line:#d1ccc0;
- --rule:var(--line);
- --gold:#827d72;
- --ornament:#777269;
- --parchment:url('./assets/parchment.svg');
- --floral-corner:url('./assets/floral-corner.svg');
- --floral-rule:url('./assets/floral-rule.svg');
- background:#ebe8df;
+/* The shared folio: original engraved borders on fine ivory paper. */
+:root {
+  --paper: #f5f1e6;
+  --page: #faf7ef;
+  --ink: #3a372f;
+  --burgundy: #75434b;
+  --muted: #6a6255;
+  --line: #c9bfad;
+  --rule: var(--line);
+  --fine: #dad1c1;
+  --gold: #998874;
+  --ornament: #998874;
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --body: 'Old Standard', Georgia, serif;
+  --smallcaps: var(--body);
+  background: var(--paper);
 }
-body{background:#ebe8df}
-#root{max-width:1320px;min-height:100vh;margin:0 auto;background:var(--parchment) repeat,var(--paper);border:0;box-shadow:none}
-.site-header,main,.site-footer{background:transparent;border-inline:0;box-shadow:none}
-.site-header{border-top:0;padding-top:34px}
-.main-nav{border-block:1px solid var(--line)}
-.library-nav{background:transparent;border-color:var(--line)}
-.site-footer{border-top:1px solid var(--line)}
-a{color:var(--ink)}
-a:hover,.text-button:hover,summary:hover{color:var(--burgundy)}
-.brand,.main-nav a[aria-current=page],.library-nav a[aria-current=page]{color:var(--burgundy)}
-.main-nav a[aria-current=page]{text-decoration-style:solid;text-decoration-thickness:2px}
-.main-nav a:hover,.concept-row:hover{background:#eeebe2}
-summary,.text-button,.button{color:var(--ink)}
-.button{border-color:#9c978b;background:transparent}
-.button:hover{background:#eeebe2;color:var(--ink)}
-.button.primary,.button.dark,.course-page .button.primary{background:var(--burgundy);border-color:var(--burgundy);color:var(--page)}
-.button.primary:hover,.button.dark:hover,.course-page .button.primary:hover{background:#4f2230;border-color:#4f2230;color:var(--page)}
-input,select,textarea{border-color:#aaa597;background:var(--page)}
+body {
+  background: var(--paper) url('./assets/ivory-paper.svg') repeat;
+  color: var(--ink);
+  font: 18px/1.65 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+#root { min-height: 100vh; }
+a { color: inherit; }
+a:hover, summary:hover, .text-button:hover { color: var(--burgundy); }
+strong, b { font-weight: 700; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; }
+h1 { font-size: 66px; line-height: 1.08; letter-spacing: -.025em; }
+h2 { font-size: 32px; line-height: 1.2; }
+h3 { font-size: 24px; line-height: 1.3; }
+::selection { background: #e5d7d1; }
+input, select, textarea { border-color: #a99b85; border-radius: 0; background: var(--page); }
+button, .button { border-color: #a99b85; background: transparent; color: var(--ink); }
+button:hover:not(:disabled), .button:hover { background: #ece6d9; color: var(--ink); }
+.button.primary, .button.dark, .course-page .button.primary { background: var(--burgundy); border-color: var(--burgundy); color: #fffaf1; }
+.button.primary:hover, .button.dark:hover, .course-page .button.primary:hover { background: #60353e; border-color: #60353e; color: #fffaf1; }
+summary, .text-button { color: var(--ink); }
+.site-header, .site-footer, main { background: transparent; border: 0; box-shadow: none; }
+.site-header { max-width: 1112px; margin: 0 auto; padding: 30px 0 0; }
+.masthead { padding-bottom: 25px; }
+.brand { font: italic 500 42px/1 var(--display); color: var(--ink); letter-spacing: .005em; }
+.brand span { font: 14px/1.5 var(--body); letter-spacing: .035em; margin-top: 7px; color: var(--ink); }
+.workspace-link { font-size: 16px; }
+.main-nav { display: flex; justify-content: flex-start; gap: 42px; padding: 0 4px; border-block: 1px solid var(--line); }
+.main-nav a, .main-nav a:first-child { padding: 13px 0 10px; font: 18px/1.55 var(--body); }
+.main-nav a[aria-current=page] { text-decoration: none; box-shadow: 0 2px var(--burgundy); }
+.main-nav a:hover { background: none; color: var(--burgundy); }
+.library-nav { justify-content: flex-start; gap: 32px; min-height: 52px; padding: 0 4px; border: 0; font-size: 16px; background: transparent; }
+.library-nav a { padding: 8px 0; }
+.library-nav a[aria-current=page] { color: var(--burgundy); }
+main.folio { position: relative; width: calc(100% - 48px); max-width: 1280px; margin: 16px auto 24px; padding: 48px 0 52px; }
+.page-content { position: relative; padding: 0 84px; min-width: 0; }
+.page-content > :first-child { margin-top: 22px; }
+.site-footer { max-width: 1112px; padding: 0; margin: 4px auto 28px; font-size: 14px; }
+.site-footer > span { font: 14px/1.65 var(--body); }
+.site-footer p { font-size: 13px; }
+.decoration { display: block; pointer-events: none; user-select: none; }
+.botanical-border { --corner: 150px; --rail: 40px; position: absolute; inset: 0; opacity: .9; }
+.border-rule { position: absolute; inset: 7px; border: 1px solid #d4c8b4; }
+.border-vine { position: absolute; top: var(--corner); bottom: var(--corner); width: var(--rail); background: url('./assets/botanical-border-vine.svg') center / var(--rail) calc(var(--rail) * 7.083333) no-repeat round; }
+.border-vine-left { left: 0; }
+.border-vine-right { right: 0; transform: scaleX(-1); }
+.border-garland { position: absolute; left: var(--corner); right: var(--corner); height: var(--rail); background: url('./assets/botanical-border-garland.svg') center / calc(var(--rail) * 7.083333) var(--rail) round no-repeat; }
+.border-garland-top { top: 0; }
+.border-garland-bottom { bottom: 0; transform: scaleY(-1); }
+.border-corner { position: absolute; width: var(--corner); height: var(--corner); }
+.border-corner-nw { top: 0; left: 0; }
+.border-corner-ne { top: 0; right: 0; transform: scaleX(-1); }
+.border-corner-sw { bottom: 0; left: 0; transform: scaleY(-1); }
+.border-corner-se { bottom: 0; right: 0; transform: rotate(180deg); }
+.illustrated-initial { display: inline-block; position: relative; line-height: 1; vertical-align: baseline; }
+.illustrated-initial > span { position: relative; }
+.initial-drawing { position: absolute; width: 1.12em; height: 1.27em; max-width: none; left: -.26em; bottom: -.14em; }
+.page-tail { position: relative; height: 130px; margin: 0 84px; overflow: hidden; }
+.page-tail::before { content: ''; position: absolute; top: 72px; left: 0; right: 190px; border-top: 1px solid var(--fine); }
+.page-tail > .flourish { position: absolute; width: 190px; height: auto; right: 0; bottom: 1px; }
 
-/* Ornament belongs to title pages and chapter divisions, printed in the same ink. */
-.floral-frame{display:none;position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.frontispiece>.floral-frame{display:block}
-.floral-corner{position:absolute;width:69px;height:69px;background:var(--floral-corner) no-repeat center/contain;opacity:.58}
-.floral-corner.nw{top:7px;left:7px}.floral-corner.ne{top:7px;right:7px;transform:rotate(90deg)}
-.floral-corner.sw{bottom:7px;left:7px;transform:rotate(-90deg)}.floral-corner.se{bottom:7px;right:7px;transform:rotate(180deg)}
-.floral-rule{display:block;width:210px;max-width:75%;height:32px;margin:22px auto 0;background:var(--floral-rule) no-repeat center/contain;pointer-events:none;opacity:.8}
-.frontispiece{margin:13px 0 56px;padding:48px 55px;border:1px solid var(--line);outline:0;background:transparent;box-shadow:none;min-height:430px}
-.frontispiece::before,.frontispiece::after,.worked-example::before,.worked-example::after,.reader-page::before,.reader-page::after{display:none}
-.frontispiece-copy{position:relative;align-self:center}
-.frontispiece-art{color:var(--ornament);margin-left:30px;max-height:none;align-self:center}
-.frontispiece-art .botanical{width:290px;height:auto;max-height:360px;transform:none;filter:none}
-.frontispiece .engraving-rule{display:none}
-.frontispiece .volume-label{font-size:14px;letter-spacing:.7px;color:var(--muted);margin-bottom:22px}
-.frontispiece h1{font-size:clamp(44px,5vw,67px);color:var(--ink)}
-.frontispiece h1 em{color:inherit}
-.frontispiece-copy>p:not(.volume-label){color:var(--ink)}
-.chapter-opening{border-bottom:0;padding:18px 35px 28px;margin-bottom:20px}
-.chapter-opening .chapter-roman{font:42px/1.2 var(--display);display:block;min-width:0;height:auto;padding:0;margin:0 0 16px;border:0;border-radius:0;box-shadow:none;background:none;color:var(--ink)}
-.chapter-opening>p:last-of-type{font-size:20px;color:var(--muted)}
-.chapter-opening .floral-rule{margin-top:26px}
-.section-heading,.home-library,.page-turns{border-width:1px;border-color:var(--line)}
-.chapter-number,.row-number,.stage-number,.choice-letter{color:var(--muted)}
-.lesson-method li::before,.worked-example h3,.essay-rubric h3 span,.rubric-levels h4>span{color:var(--ink)}
+/* Library opening and contents. */
+.frontispiece { grid-template-columns: minmax(0, 1fr) 340px; gap: 60px; align-items: center; padding: 35px 0 42px; margin: 0; min-height: 426px; border: 0; outline: 0; background: transparent; box-shadow: none; }
+.page-content > .frontispiece:first-child { margin-top: 0; }
+.frontispiece::before, .frontispiece::after, .worked-example::before, .worked-example::after { display: none; }
+.frontispiece-copy { min-width: 0; }
+.frontispiece h1 { font: 500 82px/1.02 var(--display); letter-spacing: -.025em; margin: 0; }
+.frontispiece h1 em { font-style: italic; font-weight: 500; color: inherit; }
+.title-line { white-space: nowrap; }
+.frontispiece-copy > p { max-width: 490px; font-size: 19px; line-height: 1.6; margin: 27px 0 25px; }
+.frontispiece-copy > p:not(.volume-label) { max-width: 490px; font-size: 19px; line-height: 1.6; }
+.frontispiece .button { font-size: 17px; padding: 10px 19px 9px; min-height: 45px; gap: 24px; }
+.frontispiece-art { margin: 0; max-height: none; }
+.frontispiece-art .botanical { width: 340px; height: auto; max-height: none; transform: none; filter: none; }
+.course-entry { display: grid; grid-template-columns: 150px minmax(0,1fr) auto; align-items: center; gap: 26px; border-block: 1px solid var(--line); padding: 22px 0; margin-bottom: 26px; }
+.course-entry h2 { font-size: 26px; margin: 0; }
+.course-entry p { font-size: 17px; line-height: 1.55; color: var(--muted); margin: 0; max-width: 44ch; }
+.course-entry a { font-size: 16px; white-space: nowrap; }
+.section-heading { flex-direction: row; align-items: baseline; padding: 17px 0 21px; border: 0; margin: 0; }
+.section-heading a { font-size: 16px; }
+.contents-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0 34px; }
+.chapter-entry { display: grid; grid-template-columns: 40px minmax(0,1fr); gap: 9px; padding: 24px 0; min-height: 0; border: 0; border-top: 1px solid var(--fine); }
+.chapter-entry h3 { font: 500 24px/1.3 var(--display); margin: 0; }
+.chapter-entry p { font-size: 16px; line-height: 1.55; margin-top: 9px; }
+.chapter-number { min-width: 0; font: 21px/1.55 var(--body); color: var(--burgundy); padding-top: 2px; }
+.unit-count { display: block; color: var(--muted); font-size: 14px; margin-top: 13px; }
+.home-library { display: block; margin-top: 29px; padding-top: 8px; border-top: 1px solid var(--line); }
+.home-library h2 { font-size: 32px; }
+.featured-books { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 28px; max-width: none; overflow: visible; padding: 0; }
+.book-preview { display: flex; align-items: center; gap: 15px; padding: 17px 0; text-decoration: none; min-width: 0; }
+.book-preview h3 { font: 500 23px/1.3 var(--display); margin: 0; }
+.book-preview p { font-size: 16px; margin: 5px 0 0; }
+.book-preview div > span { display: block; color: var(--muted); font-size: 13px; margin-top: 5px; }
+.book-preview:hover h3 { text-decoration: underline; }
+.book-initial { font: italic 500 46px/1 var(--display); color: var(--burgundy); width: 38px; text-align: center; flex-shrink: 0; }
 
-/* Covers remain flat typographic panels; no simulated spines or layered page edges. */
-.book-cover{position:relative;isolation:isolate;background:transparent;border:1px solid #bab4a7;outline:0;box-shadow:none;padding:30px 22px;transition:border-color .2s}
-.book-tile:hover .book-cover{transform:none;border-color:var(--burgundy)}
-.book-cover h3,.book-title-page h1,.project-card h2{color:var(--ink)}
-.book-cover>span:not(.cover-flower){color:var(--muted)}
-.book-cover .cover-flower{width:90px;max-width:80%;height:28px;min-height:28px;background:var(--floral-rule) no-repeat center/contain;margin:0 auto 18px;opacity:.65}
-.book-title-page{position:relative;background:transparent;padding:40px 30px;border:1px solid var(--line);box-shadow:none}
-.book-title-page .botanical{height:140px;width:115px;color:var(--ornament);margin-bottom:19px}
-.drop-cap:first-letter{font-size:72px;line-height:.85;padding:8px 9px 0 0;margin:0;border:0;box-shadow:none;background:none;color:var(--ink)}
-.worked-example{background:transparent;border:1px solid var(--line);box-shadow:none}
-.project-card{background:transparent;border:1px solid var(--line);box-shadow:none}
-.project-card>span{border-top:1px solid var(--line)}
-.topic-box{background:#eeebe2;border-block:1px solid var(--line)}
-.deliverable{background:var(--page);border-left-color:var(--line)}
-.project-rubric h3{background:#eae6dc;color:var(--ink)}
-.rubric-levels>div,.essay-rubric section{background:transparent}
-.save-button[aria-pressed=true]{background:#efe8e8;color:var(--burgundy)}
+/* Chapter openings and study pages. Illustrations never sit behind study text. */
+.page-heading { max-width: 900px; margin: 22px 0 32px; padding-top: 15px; }
+.page-heading h1, .course-page h1, .writing-tools-page .tools-heading h1 { font-size: 66px; line-height: 1.08; }
+.page-heading p { font-size: 19px; max-width: 72ch; }
+.chapter-opening { padding: 20px 35px 28px; margin-bottom: 20px; border: 0; }
+.chapter-opening h1 { font-size: 60px; }
+.chapter-opening .chapter-roman { font: 38px/1.2 var(--display); color: var(--burgundy); margin-bottom: 12px; }
+.chapter-opening > p:last-of-type { font-size: 20px; color: var(--muted); }
+.floral-rule { width: 130px; height: auto; margin: 5px auto 0; }
+.breadcrumb { color: var(--muted); margin-bottom: 16px; }
+.concept-heading { position: relative; display: block; padding: 10px 0 28px; }
+.concept-title { display: grid; grid-template-columns: minmax(0,1fr) 250px; align-items: center; gap: 40px; min-height: 155px; }
+.concept-title h1 { font-size: 66px; margin: 0; }
+.chapter-flourish { width: 250px; height: auto; }
+.concept-heading .save-button { margin-top: 16px; }
+.save-button[aria-pressed=true] { background: #ede3df; color: var(--burgundy); border-color: var(--burgundy); }
+.chapter-tabs { border-block: 1px solid var(--line); margin: 0 0 26px; gap: 30px; }
+.chapter-tabs a { padding: 14px 2px 12px; font: 18px/1.55 var(--body); }
+.chapter-tabs a[aria-current=page] { border-bottom: 0; margin-bottom: 0; box-shadow: 0 2px var(--burgundy); color: var(--burgundy); }
+.lesson-introduction { max-width: 72ch; margin: 30px 0 38px; font-size: 19px; line-height: 1.75; }
+.drop-cap:first-letter { font: 64px/.85 var(--display); padding: 8px 9px 0 0; color: var(--ink); }
+.lesson-spread { grid-template-columns: 1.15fr 1fr; gap: 45px; border-top: 1px solid var(--line); padding-top: 30px; }
+.lesson-method li::before { font-style: italic; color: var(--burgundy); }
+.reading-caution h3 { font-size: 24px; }
+.worked-example { background: transparent; border: 0; border-left: 1px solid var(--line); padding: 0 0 0 30px; box-shadow: none; }
+.worked-example h2 { font-size: 29px; }
+.worked-example h3 { font: 700 16px/1.5 var(--body); color: var(--ink); }
+.worked-example > div + div { border-color: var(--fine); }
+.guided-practice { border-top: 1px solid var(--line); }
+.page-turns, .answer-feedback { border-top-width: 1px; }
+.concept-row:hover { background: #ede8dc; }
+.row-number, .stage-number { color: var(--burgundy); }
+.question h3 { font: 400 24px/1.45 var(--body); }
+.passage, .reader-page { background: var(--page); border: 1px solid var(--line); outline: 0; box-shadow: none; }
+.passage h3 { font: 500 30px/1.25 var(--display); }
+.choice { background: var(--page); }
+.choice-letter { color: var(--muted); }
+.draft textarea { box-shadow: none; background-image: none; }
+.essay-rubric section { background: transparent; }
+.essay-rubric h3 { font-family: var(--display); }
+.essay-rubric h3 span { color: var(--ink); }
 
-/* Continuous paper for reading; writing and answer surfaces stay visibly distinct. */
-.passage,.reader-page{background:var(--page);border:1px solid var(--line);outline:0;box-shadow:none}
-.reader-page h1{border-bottom:1px solid var(--line);background:none;padding-bottom:25px;margin-bottom:35px}
-.draft textarea,.writing-tools-page .manuscript{background:var(--page);box-shadow:none;border-color:#aaa597}
-.draft textarea{background-image:none}
-.choice{background:var(--page)}
-.next-session{border-left-color:var(--line)}
-.course-note{border-left-color:var(--line)}
-.map-node rect{stroke:#a59f92}
-.map-node.mastery-learning rect{fill:#efede5}.map-node.mastery-practicing rect{fill:#dedbd1}
-.map-node.mastery-secure rect,.map-node.selected rect{fill:var(--burgundy);stroke:var(--burgundy)}
-.map-node.mastery-secure text,.map-node.selected text{fill:var(--page)}
-.map-node.mastery-review rect{stroke:var(--burgundy)}
-.map-edge{stroke:#b9b3a5}.map-edge.connection{stroke:#8d877b}
+/* Projects, rubrics, and books share the same quiet working surfaces. */
+.project-card { background: transparent; box-shadow: none; border-color: var(--line); }
+.project-card h2, .book-cover h3, .book-title-page h1, .draft-row h2 { color: var(--ink); }
+.project-card h2 { font-weight: 500; }
+.project-title { margin-left: 0; margin-right: 0; max-width: 900px; }
+.project-title h1 { padding-top: 16px; }
+.project-title h2 { font-size: 45px; }
+.project-title > p:not(.eyebrow):not(.quiet) { font-size: 20px; }
+.topic-box { background: #ede8dc; }
+.deliverable { background: var(--page); border-left-color: var(--line); }
+.project-rubric h3 { background: #e7e0d2; color: var(--ink); font-family: var(--display); font-weight: 500; }
+.rubric-levels > div { background: transparent; }
+.rubric-levels h4 { font: 700 17px/1.4 var(--body); }
+.rubric-levels h4 > span { color: var(--muted); font-weight: 400; }
+.book-cover, .book-title-page { position: relative; background: transparent; border: 1px solid var(--line); outline: 0; box-shadow: none; }
+.book-cover { padding: 35px 25px; min-height: 300px; transition: border-color .2s; }
+.book-tile:hover .book-cover { transform: none; border-color: var(--burgundy); }
+.book-cover h3 { font: 500 29px/1.15 var(--display); }
+.book-cover > span:not(.cover-flower) { color: var(--muted); }
+.book-cover .cover-flower { display: block; width: 100px; height: 56px; margin: 0 auto 14px; background: url('./assets/filigree-flourish.svg') center/contain no-repeat; }
+.floral-frame { position: absolute; inset: 0; overflow: hidden; }
+.floral-corner { position: absolute; width: 58px; height: 58px; opacity: .8; }
+.floral-corner.nw { left: 0; top: 0; }
+.floral-corner.ne { right: 0; top: 0; transform: scaleX(-1); }
+.floral-corner.sw { left: 0; bottom: 0; transform: scaleY(-1); }
+.floral-corner.se { right: 0; bottom: 0; transform: rotate(180deg); }
+.book-title-page { padding: 38px 35px; }
+.book-title-page .floral-corner { width: 85px; height: 85px; }
+.book-title-page .botanical { width: 135px; height: auto; margin-bottom: 22px; }
+.book-title-page h1 { font-size: 52px; line-height: 1.15; }
+.book-title-page > p { font-size: 16px; }
+.book-study-entry { border-block: 1px solid var(--line); padding: 28px 0; margin: 28px 0; }
+.reader-page { padding: 55px 60px; margin-inline: auto; }
+.reader-page h1 { font: 500 32px/1.4 var(--display); background: none; }
+.reader-page p { font-family: var(--body); }
 
-@media(min-width:1400px){#root{margin-block:0}.site-header,main,.site-footer{border-inline:0;box-shadow:none}}
-@media(max-width:1000px){.frontispiece{padding:40px 35px}.frontispiece-art{margin-left:12px}.frontispiece-art .botanical{width:240px}}
-@media(max-width:760px){body{background:var(--paper)}.site-header{padding-top:24px}.frontispiece{padding:34px 29px;margin-bottom:42px;min-height:0}.frontispiece-art{display:none}.frontispiece .floral-corner{width:49px;height:49px;opacity:.5}.frontispiece .volume-label{font-size:13px;letter-spacing:.4px}.chapter-opening{padding:15px 10px 25px}.chapter-opening>p:last-of-type{font-size:18px}.book-title-page{padding:35px 28px}.drop-cap:first-letter{font-size:66px}.book-cover{box-shadow:none}.reader-page{box-shadow:none}}
-@media(max-width:440px){.frontispiece{padding:32px 23px}.frontispiece h1{font-size:43px;letter-spacing:-1px}.frontispiece .floral-corner{width:40px;height:40px}.chapter-opening .chapter-roman{font-size:37px}.reader-page{margin-inline:5px}}
-@media(prefers-contrast:more){#root{background-image:none}.floral-frame{opacity:.65}}
-@media print{body,#root,main,.frontispiece,.book-cover,.book-title-page,.worked-example,.project-card,.passage,.reader-page,.topic-box{background:white!important;background-image:none!important;box-shadow:none!important;border-color:#aaa}#root{margin:0;border:0}.floral-frame,.floral-rule{display:none!important}.drop-cap:first-letter{background:none;box-shadow:none}}
+/* Course, mastery map, editor, and thesaurus retain familiar controls. */
+.course-page-heading { padding: 15px 0 28px; }
+.course-page .course-kicker { font-size: 14px; text-transform: none; letter-spacing: 0; }
+.course-page h2 { font-size: 30px; }
+.course-page h3 { font-size: 24px; }
+.course-page p { font-size: 17px; }
+.course-page .course-task-meta, .course-page .course-help, .course-page .knowledge-summary > p { font-size: 14px; }
+.course-page .course-profile input, .course-page .course-profile select, .course-form-grid input, .course-search input, .task-completion textarea, .mastery-control select { background: var(--page); border-color: #a99b85; }
+.next-session, .course-note { border-left-color: var(--line); }
+.map-node rect { stroke: #a99b85; }
+.map-node.mastery-learning rect { fill: #eee9dd; }
+.map-node.mastery-practicing rect { fill: #ded5c5; }
+.map-node.mastery-secure rect, .map-node.selected rect { fill: var(--burgundy); stroke: var(--burgundy); }
+.map-node.mastery-secure text, .map-node.selected text { fill: var(--page); }
+.map-node.mastery-review rect { stroke: var(--burgundy); }
+.map-edge { stroke: #b3a793; }
+.map-edge.connection { stroke: #998878; }
+.writing-tools-page .tools-heading { padding-top: 15px; }
+.writing-tools-page .tools-tabs { gap: 30px; border-block: 1px solid var(--line); }
+.writing-tools-page .tools-tabs a { padding: 12px 2px; border: 0; background: transparent; color: var(--ink); text-decoration: none; font-size: 18px; }
+.writing-tools-page .tools-tabs a[aria-current=page] { color: var(--burgundy); background: transparent; box-shadow: 0 2px var(--burgundy); }
+.writing-tools-page .writing-stats { border-color: var(--line); background: transparent; }
+.writing-tools-page .manuscript { background: var(--page); box-shadow: none; border: 1px solid #a99b85; }
+.writing-tools-page .manuscript-heading h2 { font-variant: normal; }
+.writing-tools-page .writing-review { border-top: 1px solid var(--line); }
+.writing-tools-page .review-switch button[aria-pressed=true] { background: #ece6d9; box-shadow: inset 0 -2px var(--burgundy); }
+.writing-tools-page .annotation.grammar, .writing-tools-page .annotation.complexity { background: #e9dfce; }
+.writing-tools-page .document-bar label, .writing-tools-page .word-search label { font-variant: normal; letter-spacing: 0; }
+.writing-tools-page .tools-methodology { border-block: 1px solid var(--line); }
+.writing-tools-page .word-search input, .writing-tools-page .document-bar select, .writing-tools-page .review-filter select { background: var(--page); border-color: #a99b85; }
+
+@media (max-width: 1240px) {
+  .site-header, .site-footer { margin-left: 72px; margin-right: 72px; }
+  main.folio { width: calc(100% - 24px); padding-top: 42px; padding-bottom: 44px; }
+  .botanical-border { --corner: 126px; --rail: 33.6px; }
+  .page-content { padding-inline: 60px; }
+  .page-tail { margin-inline: 60px; }
+  .frontispiece { gap: 30px; grid-template-columns: minmax(0,1fr) 300px; }
+  .frontispiece-art .botanical { width: 300px; }
+  .frontispiece h1 { font-size: 70px; }
+  .concept-title { grid-template-columns: minmax(0,1fr) 210px; gap: 30px; }
+  .chapter-flourish { width: 210px; }
+}
+@media (max-width: 940px) {
+  .site-header, .site-footer { margin-inline: 58px; }
+  main.folio { padding-block: 34px; }
+  .page-content { padding-inline: 46px; }
+  .page-tail { margin-inline: 46px; }
+  .botanical-border { --corner: 96px; --rail: 25.6px; }
+  .frontispiece { grid-template-columns: minmax(0,1fr) 230px; gap: 20px; min-height: 360px; }
+  .frontispiece-art .botanical { width: 230px; }
+  .frontispiece h1 { font-size: 59px; }
+  .course-entry { grid-template-columns: 110px 1fr; gap: 18px 24px; }
+  .course-entry > a { grid-column: 2; }
+  .contents-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .featured-books { grid-template-columns: 1fr; gap: 0; }
+  .book-preview + .book-preview { border-top: 1px solid var(--fine); }
+  .concept-title { grid-template-columns: minmax(0,1fr) 180px; gap: 25px; }
+  .chapter-flourish { width: 180px; }
+  .concept-title h1, .page-heading h1, .course-page h1, .writing-tools-page .tools-heading h1 { font-size: 56px; }
+  .lesson-spread { gap: 30px; }
+  .project-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .bookshelf { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .course-dashboard-grid, .course-setup { grid-template-columns: 1fr; }
+  .course-aside, .course-setup aside { border: 0; border-top: 1px solid var(--line); padding: 25px 0 0; }
+  .course-aside .study-days label { display: inline-flex; }
+  .practice-spread, .writing-layout { grid-template-columns: 1fr; }
+  .writing-tools-page .writing-review { margin-top: 15px; }
+}
+@media (max-width: 760px) {
+  .site-header { padding-top: 25px; }
+  .brand { font-size: 39px; }
+  .main-nav { gap: 30px; }
+  .library-nav { gap: 23px; }
+  .frontispiece-art { display: flex; }
+  .frontispiece h1 { font-size: 55px; }
+  .frontispiece { grid-template-columns: minmax(0,1fr) 185px; gap: 15px; }
+  .frontispiece-art .botanical { width: 185px; }
+  .lesson-spread { grid-template-columns: 1fr; }
+  .worked-example { border-left: 0; border-top: 1px solid var(--line); padding: 25px 0 0; }
+  .lesson-introduction { font-size: 19px; }
+  .concept-title { grid-template-columns: minmax(0,1fr) 150px; }
+  .chapter-flourish { width: 150px; }
+  .concept-title h1 { font-size: 52px; }
+  .reader-page { padding: 35px 24px; }
+  .course-page p { font-size: 17px; }
+}
+@media (max-width: 700px) {
+  .border-vine, .frontispiece-art, .chapter-flourish { display: none; }
+  .frontispiece, .concept-title { grid-template-columns: 1fr; }
+  .frontispiece { min-height: 0; }
+  .concept-title { min-height: 0; padding-block: 18px; }
+  .concept-heading { padding-bottom: 25px; }
+  .main-nav { gap: 0; justify-content: space-between; }
+  .main-nav a, .main-nav a:first-child { font-size: 16px; }
+  .library-nav { gap: 0; justify-content: space-between; font-size: 14px; }
+  .project-grid, .course-recommendations { grid-template-columns: 1fr; }
+  .writing-tools-page .tools-tabs { gap: 24px; }
+}
+@media (max-width: 560px) {
+  .site-header { margin: 0 30px; }
+  .brand { font-size: 37px; }
+  .brand span { font-size: 12px; letter-spacing: 0; }
+  .workspace-link { font-size: 13px; text-align: right; max-width: 60px; line-height: 1.4; }
+  .masthead { padding-bottom: 24px; }
+  .main-nav { display: flex; flex-wrap: nowrap; text-align: left; }
+  .main-nav a, .main-nav a:first-child { padding: 12px 0 10px; font-size: 15px; white-space: nowrap; }
+  .library-nav { min-height: 48px; font-size: 13px; }
+  main.folio { width: calc(100% - 8px); margin-top: 12px; padding-block: 32px; }
+  .page-content { padding-inline: 26px; }
+  .page-content > :first-child { margin-top: 18px; }
+  .botanical-border { --corner: 74px; --rail: 19.7333px; }
+  .border-rule { inset: 5px; }
+  .frontispiece { padding: 33px 0 30px; }
+  .frontispiece h1 { font-size: 52px; line-height: 1.12; letter-spacing: -.035em; }
+  .frontispiece-copy > p:not(.volume-label) { font-size: 18px; margin-top: 24px; }
+  .frontispiece .button { font-size: 16px; padding: 11px 15px; gap: 18px; }
+  .course-entry { display: block; padding: 21px 0 23px; margin-bottom: 22px; }
+  .course-entry h2 { font-size: 24px; }
+  .course-entry p { margin: 9px 0 11px; }
+  .section-heading { padding: 8px 0 19px; align-items: start; gap: 12px; }
+  .section-heading h2 { font-size: 27px; }
+  .section-heading a { font-size: 14px; max-width: 115px; text-align: right; padding-top: 3px; }
+  .contents-grid { grid-template-columns: 1fr; }
+  .chapter-entry { padding: 21px 0; gap: 10px; }
+  .chapter-entry h3 { font-size: 24px; }
+  .chapter-entry p { font-size: 17px; }
+  .unit-count { margin-top: 9px; }
+  .home-library { margin-top: 20px; padding-top: 19px; }
+  .book-preview h3 { font-size: 23px; }
+  .book-initial { width: 34px; }
+  .page-tail { margin-inline: 26px; height: 100px; }
+  .page-tail > .flourish { width: 150px; bottom: 0; }
+  .page-tail::before { right: 155px; top: 50px; }
+  .site-footer { font-size: 12px; margin: 8px 30px 24px; }
+  .site-footer > span, .site-footer p { font-size: 12px; }
+  .site-footer > div { gap: 18px; }
+  h1, .page-heading h1, .concept-title h1, .chapter-opening h1, .course-page h1, .writing-tools-page .tools-heading h1 { font-size: 49px; line-height: 1.12; }
+  .chapter-opening { padding-inline: 0; }
+  .page-heading p, .chapter-opening > p:last-of-type { font-size: 18px; }
+  .breadcrumb { font-size: 14px; gap: 8px; margin-bottom: 10px; }
+  .chapter-tabs { gap: 27px; }
+  .chapter-tabs a { padding: 12px 0 10px; font-size: 17px; }
+  .lesson-introduction { font-size: 18px; line-height: 1.7; margin: 26px 0 30px; }
+  .lesson-method h2, .worked-example h2, .guided-practice h2 { font-size: 28px; }
+  .lesson-actions { align-items: flex-start; }
+  .question h3 { font-size: 22px; }
+  .bookshelf { grid-template-columns: 1fr; gap: 28px; }
+  .book-cover { min-height: 290px; padding-inline: 35px; }
+  .book-cover h3 { font-size: 33px; }
+  .book-cover > span { font-size: 15px; }
+  .book-title-page { padding: 35px 25px; }
+  .book-title-page h1 { font-size: 44px; }
+  .reader-page { padding: 28px 17px; margin-inline: 0; }
+  .reader-page p { font-size: 19px; }
+  .reader-page h1 { font-size: 28px; }
+  .rubric-levels { grid-template-columns: 1fr; }
+  .rubric-levels p { font-size: 16px; }
+  .project-stages > li { gap: 12px; }
+  .project-stages > li > div { min-width: 0; }
+  .writing-tools-page .manuscript textarea, .writing-tools-page .annotated-text { padding: 20px 16px; font-size: 18px; }
+}
+@media (max-width: 359px) {
+  .brand { font-size: 33px; }
+  .brand span { font-size: 11px; }
+  .main-nav a, .main-nav a:first-child { font-size: 13px; }
+  .library-nav { font-size: 12px; }
+  .frontispiece h1 { font-size: 45px; }
+  h1, .page-heading h1, .concept-title h1, .chapter-opening h1, .course-page h1, .writing-tools-page .tools-heading h1 { font-size: 43px; }
+}
+@media (forced-colors: active) {
+  body { background-image: none; }
+  .decoration, .cover-flower { display: none !important; }
+  .main-nav a[aria-current], .chapter-tabs a[aria-current], .writing-tools-page .tools-tabs a[aria-current] { outline: 1px solid LinkText; }
+  .map-node rect { stroke: CanvasText; }
+  .map-node text { fill: CanvasText; }
+}
+@media print {
+  body, #root, main.folio, .book-cover, .book-title-page, .worked-example, .project-card, .passage, .reader-page, .topic-box { background: white !important; background-image: none !important; color: black; box-shadow: none !important; border-color: #aaa; }
+  .decoration, .cover-flower, .course-entry { display: none !important; }
+  main.folio, .page-content { width: 100%; max-width: none; margin: 0 !important; padding: 0 !important; }
+  .concept-title, .frontispiece, .practice-spread, .lesson-spread { display: block; min-height: 0; }
+  .worked-example { border-left: 0; margin-top: 24px; padding-left: 0; }
+  .reader-page { padding: 0; border: 0; }
+  .illustrated-initial { display: inline; }
+}

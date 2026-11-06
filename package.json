@@ -17,9 +17,6 @@
     "test:course": "node tests/course-browser.mjs"
   },
   "dependencies": {
-    "@fontsource/baskervville": "^5.3.0",
-    "@fontsource/im-fell-english": "^5.3.0",
-    "@fontsource/im-fell-english-sc": "^5.3.0",
     "lucide-react": "^0.468.0",
     "nspell": "^2.1.5",
     "react": "^19.2.0",

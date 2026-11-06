@@ -1,7 +1,8 @@
+import {PageTitle} from './components/Ornament.jsx';
 import React,{useEffect,useRef,useState} from 'react';
 import {CATEGORY_LABELS,MAX_ANALYSIS_CHARS,applyReplacement,highlightSegments} from './tools/analyze.js';
 import {lookupWord} from './tools/thesaurus.js';
-import './writing-tools.css';
+
 
 const baseURL=new URL(import.meta.env.BASE_URL,document.baseURI).href;
 const SAMPLE='The the narrator was described as reliable by the reader, but the details complicate that judgement. She has a unusual confidence in her account. Her conclusions are recieved without question by the other characters. When the remembered scene is examined closely, the contrast between what she notices and what she chooses to explain suggests that her certainty may protect a more fragile understanding of herself.';
@@ -13,7 +14,7 @@ export default function WritingTools({mode,draftId,work,patch,documents}){
  let requested;try{requested=decodeURIComponent(draftId||'writing-desk');}catch{requested='';}
  const selected=documents.find(d=>d.id===requested);
  return <div className="page writing-tools-page">
-  <div className="tools-heading"><h1>Writing tools</h1></div>
+  <div className="tools-heading"><PageTitle>Writing tools</PageTitle></div>
   <nav className="tools-tabs" aria-label="Writing tools"><a href="#/tools/writing" aria-current={mode!=='thesaurus'?'page':undefined}>Writing desk</a><a href="#/tools/thesaurus" aria-current={mode==='thesaurus'?'page':undefined}>Thesaurus</a></nav>
   {mode==='thesaurus'?<section className="standalone-thesaurus"><p className="thesaurus-intro">Compare meanings and parts of speech before choosing an alternative.</p><Thesaurus/></section>:selected?<>
    {(documents.length>1||selected.href)&&<div className="document-bar"><div><label htmlFor="writing-document">Document</label><select id="writing-document" value={selected.id} onChange={e=>{location.hash=routeTo(e.target.value).slice(1);}}>{documents.map(d=><option key={d.id} value={d.id}>{d.label}</option>)}</select></div>{selected.href&&<a href={selected.href}>Return to assignment →</a>}</div>}
