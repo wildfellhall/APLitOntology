@@ -1,0 +1,62 @@
+/* Original, locally served engravings and seamless paper grain. No external assets. */
+:root{--paper:#f6efdf;--page:#fcf7eb;--line:#c7b491;--gold:#947340;--parchment:url('./assets/parchment.svg');--floral-corner:url('./assets/floral-corner.svg');--floral-rule:url('./assets/floral-rule.svg');background:#d4c5ac}
+body{background:#d4c5ac url('./assets/bookcloth.svg') repeat}
+#root{max-width:1320px;margin-inline:auto;min-height:100vh;background-color:var(--paper);background-image:var(--parchment);background-size:640px 640px;border-inline:1px solid #bba787;box-shadow:0 0 0 3px #e3d4b8,0 0 0 4px #bfa984,0 0 0 7px #eddfc5,0 0 0 8px #c8b391,0 12px 55px #49331c24,inset 18px 0 25px -24px #72533760,inset -18px 0 25px -24px #72533750}
+.site-header,main,.site-footer{background:transparent;border-inline:0;box-shadow:none}
+.site-header{border-top:4px double var(--gold);padding-top:33px}
+.main-nav{border-top:3px double var(--burgundy);border-bottom-color:#ab8d69}
+.library-nav{background:transparent;border-bottom-color:#bfa884}
+.site-footer{border-top:3px double #b7a07b}
+
+/* Four small corner pieces frame the title and covers without entering the text. */
+.floral-frame{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.floral-corner{position:absolute;width:100px;height:100px;background:var(--floral-corner) no-repeat center/contain;opacity:.92}
+.floral-corner.nw{top:5px;left:5px}.floral-corner.ne{top:5px;right:5px;transform:rotate(90deg)}.floral-corner.sw{bottom:5px;left:5px;transform:rotate(-90deg)}.floral-corner.se{bottom:5px;right:5px;transform:rotate(180deg)}
+.floral-rule{display:block;width:240px;max-width:75%;height:36px;margin:20px auto 0;background:var(--floral-rule) no-repeat center/contain;pointer-events:none}
+.frontispiece{background-color:var(--page);background-image:var(--parchment);border-color:#a08354;outline-color:#c5b28c;padding:54px 57px 50px;box-shadow:inset 0 0 30px #b7955520,0 5px 15px #57442b0c}
+.frontispiece::before,.frontispiece::after{content:'';padding:0;width:168px;height:29px;left:calc(50% - 84px);top:-15px;background:var(--floral-rule) center/contain no-repeat,var(--parchment) center/640px 640px,var(--page)}
+.frontispiece::after{top:auto;bottom:-15px;transform:rotate(180deg)}
+.frontispiece-copy{position:relative;z-index:1;align-self:center}
+.frontispiece-art{color:#7d6844;margin-left:22px;max-height:none;align-self:center}
+.frontispiece-art .botanical{width:300px;height:auto;max-height:400px;transform:none;filter:drop-shadow(.35px .4px 0 #b6975f35)}
+.frontispiece .engraving-rule{display:none}
+.frontispiece .volume-label{font-size:14px;letter-spacing:1.2px;margin-bottom:24px}
+.frontispiece h1{font-size:clamp(44px,5vw,67px)}
+.chapter-opening{border-bottom:0;position:relative;padding-top:25px;margin-bottom:25px}
+.chapter-opening .chapter-roman{font-size:46px;display:inline-flex;justify-content:center;align-items:center;min-width:83px;height:83px;padding:10px;border:3px double #b49a70;border-radius:50%;background:var(--parchment),#f0e4cb;box-shadow:0 0 0 5px var(--paper),0 0 0 6px #c4ad86;margin-bottom:25px}
+.chapter-opening>p:last-of-type{font-size:20px;color:var(--muted)}
+.chapter-opening .floral-rule{width:300px;height:42px;margin-top:24px}
+.section-heading{border-bottom:3px double var(--line)}
+
+/* Bookbinding details and smaller ornaments use the same engraved linework. */
+.book-cover{position:relative;isolation:isolate;background-color:#eee1c7;background-image:var(--parchment);border-color:#a88a57;outline-color:#c5ad7e;box-shadow:3px 2px 0 #e7d8ba,4px 2px 0 #baa27b,6px 4px 0 #f3e7cc,7px 4px 0 #c8b18b,9px 7px 11px #4d382618,inset 8px 0 12px -10px #69472e66}
+.book-cover .floral-corner{width:43px;height:43px;opacity:.85}
+.book-cover>span:not(.floral-frame){position:relative}.book-cover h3{position:relative}
+.book-cover .cover-flower{width:100px;max-width:80%;height:32px;min-height:32px;background:var(--floral-rule) no-repeat center/contain;margin:0 auto 17px}
+.book-title-page{position:relative;background-color:var(--page);background-image:var(--parchment);padding:42px 38px;border-color:#ad8d56;box-shadow:inset 0 0 28px #b4955c16,4px 4px 0 #e7d7b9,5px 5px 0 #c2aa82,8px 8px 0 #f0e2c7,9px 9px 0 #cbb892}
+.book-title-page .floral-corner{width:78px;height:78px}
+.book-title-page .botanical{height:150px;width:123px;color:#7d6844;margin-bottom:15px}
+.book-title-page h1{position:relative}.book-title-page>p,.book-title-page>span:not(.floral-frame){position:relative}
+.drop-cap:first-letter{font-size:68px;line-height:.9;padding:8px 11px 7px;margin:5px 12px 0 0;border:3px double #b79e76;background-color:#f0e5cf;background-image:var(--parchment);box-shadow:inset 0 0 0 3px var(--paper)}
+.worked-example{background-image:var(--parchment);border:3px double var(--line);box-shadow:inset 0 0 24px #b9985910,2px 4px 8px #4d382609}
+.worked-example::before,.worked-example::after{content:'';width:65px;height:24px;background:var(--floral-rule) center/contain no-repeat,var(--paper);padding:0;top:-13px;left:18px}
+.worked-example::after{top:auto;bottom:-13px;left:auto;right:18px}
+.project-card{border-top:3px double #b79c70;background-image:var(--parchment);box-shadow:2px 3px 10px #4d38260b}
+.project-card>span{border-top-style:double;border-top-width:3px}
+
+/* The text sheets have quieter grain, generous margins, and clear writing surfaces. */
+.passage,.reader-page{background-color:var(--page);background-image:url('./assets/reading-paper.svg');background-size:480px 480px}
+.passage{border-color:#c7b595;box-shadow:inset 0 0 20px #b59a6b0b}
+.reader-page{position:relative;border-color:#bda57c;outline-color:#d6c29e;box-shadow:3px 3px 0 #e8d8bb,4px 4px 0 #c4af8d,7px 7px 0 #f1e4ca,8px 8px 0 #c6b291,12px 13px 25px #58422912,inset 15px 0 22px -22px #795b3460}
+.reader-page::before,.reader-page::after{content:'';position:absolute;width:65px;height:65px;top:10px;left:10px;background:var(--floral-corner) no-repeat center/contain;pointer-events:none;opacity:.7}
+.reader-page::after{left:auto;right:10px;transform:rotate(90deg)}
+.reader-page h1{border-bottom:0;padding-bottom:57px;background:var(--floral-rule) no-repeat center bottom/220px 32px;margin-bottom:30px}
+.topic-box{background-image:var(--parchment);border-block:3px double var(--line)}
+.draft textarea,.manuscript textarea{background-image:none}
+
+@media(min-width:1400px){#root{margin-block:18px 26px}.site-header{border-inline:0}main,.site-footer{border-inline:0;box-shadow:none}}
+@media(max-width:1000px){.frontispiece{padding:45px 37px}.frontispiece-art{margin-left:8px}.frontispiece-art .botanical{width:250px}.floral-corner{width:85px;height:85px}}
+@media(max-width:760px){#root{border-inline:0;box-shadow:none}.site-header{padding-top:24px}.frontispiece{padding:36px 30px;margin-bottom:45px}.frontispiece-art{display:none}.frontispiece .floral-corner{width:65px;height:65px}.frontispiece::before,.frontispiece::after{width:128px;left:calc(50% - 64px);height:25px;top:-13px}.frontispiece::after{top:auto;bottom:-13px}.frontispiece .volume-label{font-size:13px;letter-spacing:.6px}.chapter-opening>p:last-of-type{font-size:18px}.book-title-page{padding:40px 30px}.reader-page::before,.reader-page::after{width:45px;height:45px;top:5px;left:5px;opacity:.55}.reader-page::after{left:auto;right:5px}.reader-page h1{background-size:170px 28px;padding-bottom:47px}.drop-cap:first-letter{font-size:61px;margin-top:5px}}
+@media(max-width:440px){.frontispiece{padding:35px 24px}.frontispiece .floral-corner{width:55px;height:55px}.frontispiece h1{font-size:43px;letter-spacing:-1px}.book-cover .floral-corner{width:34px;height:34px}.book-title-page .floral-corner{width:65px;height:65px}.chapter-opening .chapter-roman{font-size:39px;min-width:73px;height:73px}.reader-page{margin-inline:5px;box-shadow:2px 2px 0 #e8d8bb,3px 3px 0 #c4af8d}}
+@media(prefers-contrast:more){#root,.frontispiece,.book-cover,.book-title-page,.worked-example,.project-card,.passage,.reader-page,.topic-box{background-image:none}.floral-frame{opacity:.65}}
+@media print{body,#root,main,.frontispiece,.book-cover,.book-title-page,.worked-example,.project-card,.passage,.reader-page,.topic-box{background:white!important;background-image:none!important;box-shadow:none!important;border-color:#aaa}#root{margin:0;border:0}.floral-frame,.floral-rule,.frontispiece::before,.frontispiece::after,.worked-example::before,.worked-example::after,.reader-page::before,.reader-page::after{display:none!important}.reader-page h1{background:none;padding-bottom:20px}.drop-cap:first-letter{background:none;box-shadow:none}}
