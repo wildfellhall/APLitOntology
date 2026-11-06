@@ -1,17 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
-  <defs>
-    <filter id="paper" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency=".014 .021" numOctaves="3" seed="12" stitchTiles="stitch"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 .48 0 0 0 0 .34 0 0 0 0 .16 0 0 0 .22 -.048"/>
-    </filter>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency=".71 .63" numOctaves="3" seed="8" stitchTiles="stitch"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 .42 0 0 0 0 .31 0 0 0 0 .18 0 0 0 .26 -.07"/>
-    </filter>
-  </defs>
-  <path fill="#fff" d="M0 0h640v640H0z" filter="url(#paper)"/>
-  <path fill="#fff" d="M0 0h640v640H0z" filter="url(#grain)"/>
-  <g fill="none" stroke="#8b7352" stroke-width=".55" opacity=".12" stroke-linecap="round">
-    <path d="m33 89 8-2m112 39 6 3m139-89 7 1m173 129 9-4m-400 90 7 2m169 32 8-1m251 44 6 4m-407 115 10-2m143 79 7 1m165-23 8-3m-364 141 8 3m113-12 9-1m334-21 7 2m-42-388 2 8m-349-117 1 7m198 159-2 9m-122 164 2 8m245 44-1 9m-53 159 2 7"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
+ <defs><filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency=".76" numOctaves="2" seed="8" stitchTiles="stitch"/>
+  <feColorMatrix type="matrix" values="0 0 0 0 .38 0 0 0 0 .37 0 0 0 0 .34 0 0 0 .09 -.025"/>
+ </filter></defs>
+ <path fill="#fff" d="M0 0h480v480H0z" filter="url(#grain)"/>
 </svg>
